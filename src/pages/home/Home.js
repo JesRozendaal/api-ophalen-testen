@@ -1,16 +1,17 @@
-import React, {useEffect}  from 'react';
+import React, {useEffect, useState}  from 'react';
 import axios from "axios";
 
-// voor de test: https://api.punkapi.com/v2/beers
 // Marvel API base endpoint: http(s)://gateway.marvel.com/
 
-
 const Home = () => {
+const[Marvel, setMarvel] = useState(null);
+
     useEffect(() => {
         async function fetchData() {
             try {
-                const result = await axios.get(`https://gateway.marvel.com/v1/public/characters?ts=a&apikey=8af1f5447746327c2fe42e2f8ac85230&hash=0f6f327f0372f93add8a2596941907ff`);
-                console.log(result.data);
+                const result = await axios.get(`https://gateway.marvel.com/v1/public/characters?ts=a&apikey=${process.env.REACT_APP_API_KEY}&hash=fe4d63f4249748eb801bd839c42a624f`);
+                console.log(result.data.data.results);
+                setMarvel(result.data.data.results);
             } catch (e) {
                 console.error(e);
             }
@@ -19,9 +20,23 @@ const Home = () => {
         },[]);
 
     return (
-        <div>
+        <>
             <h1>Testing 1 2 3</h1>
-        </div>
+            {Marvel &&
+                <article>
+                    <h1>er is data!</h1>
+                    {Marvel.map((characters) => {
+                        return(
+                            <ul key={characters.id}>
+                                <li>
+                                    <p>{characters.name}</p>
+                                </li>
+                            </ul>
+                        )})
+                    }
+                </article>
+            }
+        </>
     );
 };
 
