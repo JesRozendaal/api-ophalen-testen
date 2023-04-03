@@ -1,5 +1,6 @@
 import React, {useEffect, useState}  from 'react';
 import axios from "axios";
+import {Link} from 'react-router-dom';
 
 // Marvel API base endpoint: http(s)://gateway.marvel.com/
 
@@ -36,6 +37,9 @@ const[Marvel, setMarvel] = useState(null);
                     }
                 </article>
             }
+            <article>
+                <Link to="/webshop">Naar de shop!</Link>
+            </article>
         </>
     );
 };
